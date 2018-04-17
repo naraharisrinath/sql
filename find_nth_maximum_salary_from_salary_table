@@ -1,0 +1,54 @@
+Row Number :
+
+SELECT Salary,EmpName
+FROM
+  (
+   SELECT Salary,EmpName,ROW_NUMBER() OVER(ORDER BY Salary) As RowNum
+   FROM EMPLOYEE
+   ) As A
+WHERE A.RowNum IN (2,3)
+Sub Query :
+
+SELECT *
+FROM Employee Emp1
+WHERE (N-1) = (
+               SELECT COUNT(DISTINCT(Emp2.Salary))
+               FROM Employee Emp2
+               WHERE Emp2.Salary > Emp1.Salary
+               )
+Top Keyword :
+
+SELECT TOP 1 salary
+FROM (
+      SELECT DISTINCT TOP n salary
+      FROM employee
+      ORDER BY salary DESC
+      ) a
+ORDER BY salary
+N minimum salary:
+
+
+SELECT MIN(EmpSalary)
+FROM Salary
+WHERE EmpSalary IN(SELECT TOP N EmpSalary FROM Salary ORDER BY EmpSalary DESC) 
+
+for Ex: 3 minimum salary:
+
+
+SELECT MIN(EmpSalary)
+FROM Salary
+WHERE EmpSalary IN(SELECT TOP 3 EmpSalary FROM Salary ORDER BY EmpSalary DESC) 
+
+N maximum salary:
+
+
+SELECT MAX(EmpSalary)
+FROM Salary
+WHERE EmpSalary IN(SELECT TOP N EmpSalary FROM Salary ORDER BY EmpSalary ASC)
+
+for Ex: 3 maximum salary:
+
+
+SELECT MAX(EmpSalary)
+FROM Salary
+WHERE EmpSalary IN(SELECT TOP 3 EmpSalary FROM Salary ORDER BY EmpSalary ASC)
